@@ -1,77 +1,45 @@
-# Turborepo starter with pnpm
+# pnpm and nextjs standalone bug
 
-This is an official starter turborepo.
+cloned from https://github.com/vercel/turborepo/tree/main/examples/with-pnpm
 
-## What's inside?
+## How to reproduce the bug
 
-This turborepo uses [pnpm](https://pnpm.io) as a packages manager. It includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org) app
-- `web`: another [Next.js](https://nextjs.org) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-## Setup
-
-This repository is used in the `npx create-turbo@latest` command, and selected when choosing which package manager you wish to use with your monorepo (pnpm).
-
-### Build
-
-To build all apps and packages, run the following command:
+run the build command twice to reproduce the bug `pnpm turbo run build --filter=web --force`
 
 ```
-cd my-turborepo
-pnpm run build
+❯ pnpm turbo run build --filter=web --force
+• Packages in scope: web
+• Running build in 1 packages
+web:build: cache bypass, force executing f9fd0723add3773b
+web:build:
+web:build: > web@1.0.0 build /Users/ducnguyen/Documents/code/pnpm-test/apps/web
+web:build: > next build
+web:build:
+web:build: warn  - You have enabled experimental feature(s).
+web:build: warn  - Experimental features are not covered by semver, and may cause unexpected or broken application behavior. Use them at your own risk.
+web:build:
+web:build: info  - Checking validity of types...
+web:build: info  - Creating an optimized production build...
+web:build: info  - Compiled successfully
+web:build: info  - Collecting page data...
+web:build: symlink ../../../node_modules/.pnpm/react@18.1.0/node_modules/react
+web:build: symlink ../../../node_modules/.pnpm/next@12.1.6_ef5jwxihqo6n7gxfmzogljlgcm/node_modules/next
+web:build: symlink ../../../@next+env@12.1.6/node_modules/@next/env
+web:build: symlink ../../react@18.1.0/node_modules/react
+web:build:
+web:build: > Build error occurred
+web:build: [Error: EEXIST: file already exists, symlink '../../../@next+env@12.1.6/node_modules/@next/env' -> '/Users/ducnguyen/Documents/code/pnpm-test/apps/web/node_modules/.pnpm/next@12.1.6_ef5jwxihqo6n7gxfmzogljlgcm/node_modules/@next/env'] {
+web:build:   errno: -17,
+web:build:   code: 'EEXIST',
+web:build:   syscall: 'symlink',
+web:build:   path: '../../../@next+env@12.1.6/node_modules/@next/env',
+web:build:   dest: '/Users/ducnguyen/Documents/code/pnpm-test/apps/web/node_modules/.pnpm/next@12.1.6_ef5jwxihqo6n7gxfmzogljlgcm/node_modules/@next/env'
+web:build: }
+web:build:  ELIFECYCLE  Command failed with exit code 1.
+web:build: Error: command finished with error: command (apps/web) pnpm run build exited (1)
+command (apps/web) pnpm run build exited (1)
+
+ Tasks:    0 successful, 1 total
+Cached:    0 cached, 1 total
+  Time:    4.319s
 ```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm run dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching (Beta)](https://turborepo.org/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching (Beta) you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Pipelines](https://turborepo.org/docs/core-concepts/pipelines)
-- [Caching](https://turborepo.org/docs/core-concepts/caching)
-- [Remote Caching (Beta)](https://turborepo.org/docs/core-concepts/remote-caching)
-- [Scoped Tasks](https://turborepo.org/docs/core-concepts/scopes)
-- [Configuration Options](https://turborepo.org/docs/reference/configuration)
-- [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)
