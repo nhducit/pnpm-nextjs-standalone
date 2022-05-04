@@ -1,0 +1,1 @@
+docker build . -t pnpm-web --progress=plain --no-cache --file ./apps/web/Dockerfile
